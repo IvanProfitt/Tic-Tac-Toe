@@ -1,14 +1,28 @@
 const gameSpots = document.getElementsByClassName("spot");
+let gameBoard = Array.from(gameSpots).map(spot => spot.querySelector("p"));
 
-function gameBoard(){
+function player(){
+
+    //One player needed
+    //
 
 }
 
-function player(){
+function bot(){
+    //One bot needed
+
+
 
 }
 
 function gameLoop(){
+
+
+    //Running While win condition isn't met
+    //While loop of player choosing an option, checking win condition
+    //bot choosing an option, checking win condition
+    //Continously checking that all spaces are not filled
+    //Reset the board when these conditions aren't met
 
 }
 
@@ -17,10 +31,24 @@ function addX(){
 }
 
 function addO(){
-    let ranNum=Math.floor(Math.random() * 9);
-    console.log(ranNum);
+    let randNum=Math.floor(Math.random() * 9);
+    const paragraph = gameSpots[randNum].querySelector('p');
 
-    gameSpots[ranNum].style.backgroundImage="url('images/alpha-o.svg')";
+
+
+
+
+
+    if(paragraph.innerHTML!=''){
+        console.log(paragraph.innerHTML);
+        console.log(randNum);
+        addO();
+
+
+    }
+    else{
+        paragraph.innerHTML="o";
+    }
 }
 
 
@@ -30,6 +58,9 @@ Array.from(gameSpots).forEach(function(spot) {
 });
 
 function spotClicked() {
-    this.style.backgroundImage = "url('images/alpha-x.svg')";
+    const paragraph = this.querySelector('p');
+    if(paragraph.innerHTML===''){
+    paragraph.innerHTML="x";
     addO();
+    }
 }
