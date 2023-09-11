@@ -1,3 +1,5 @@
+const gameSpots = document.getElementsByClassName("spot");
+
 function gameBoard(){
 
 }
@@ -10,14 +12,24 @@ function gameLoop(){
 
 }
 
+function addX(){
+    console.log("hi");
+}
+
+function addO(){
+    let ranNum=Math.floor(Math.random() * 9);
+    console.log(ranNum);
+
+    gameSpots[ranNum].style.backgroundImage="url('images/alpha-o.svg')";
+}
 
 
-const gameSpots = document.getElementsByClassName("spot");
 
 Array.from(gameSpots).forEach(function(spot) {
     spot.addEventListener("click", spotClicked);
 });
 
 function spotClicked() {
-    this.style.backgroundColor = "blue";
+    this.style.backgroundImage = "url('images/alpha-x.svg')";
+    addO();
 }
