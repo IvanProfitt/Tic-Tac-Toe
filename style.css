@@ -1,0 +1,23 @@
+.gameCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameBoard{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:0px;
+}
+
+.spot{
+    background-color:#D3d3d3;
+    height:150px;
+    width:150px;
+    border: 1px solid pink;
+    transition: background-color 0.3s;
+}
+
+.spot:hover{
+    background-color: aqua;
+}
