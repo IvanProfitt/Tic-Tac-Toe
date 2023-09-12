@@ -15,15 +15,20 @@
     background-color:#D3d3d3;
     height:150px;
     width:150px;
-    border: 1px solid pink;
     transition: background-color 0.3s;
-    align-items: center;
-    justify-content: center;
+
 }
 
-.spot p{
+.spot p {
+    align-self: center;
     justify-self: center;
+    text-align: center;
+    font-size: 200px;
+
+ /* Remove default margin that might affect horizontal centering */
 }
+
+
 
 .spot:hover{
     background-color: aqua;
