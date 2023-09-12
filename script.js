@@ -1,7 +1,11 @@
 const gameSpots = document.getElementsByClassName("spot");
 let gameBoard = Array.from(gameSpots).map(spot => spot.querySelector("p"));
 let winner=false;
+let draw=false;
 let winnerVal;
+let isBoardFull = true;
+let addingO=false;
+
 
 function Player(){
 
@@ -12,7 +16,7 @@ function Player(){
             const paragraph = this.querySelector('p');
             if (paragraph.innerHTML === '') {
                 paragraph.innerHTML = "x";
-                callback(); // Call the callback once the spot is clicked
+                callback();
             }
         }
     
@@ -25,19 +29,25 @@ function Player(){
 
 function Bot(){
 
-    this.addOEasy=function(){
-        let randNum=Math.floor(Math.random() * 9);
-        const paragraph = gameSpots[randNum].querySelector('p');
-
-        if(paragraph.innerHTML!=''){
-            console.log(paragraph.innerHTML);
-            console.log(randNum);
-            this.addOEasy();
+    this.addOEasy = function() {
+        if (addingO || draw) {
+            return; // Don't add "o" if already adding or if game is a draw
         }
+    
+
         else{
-            paragraph.innerHTML="o";
+        let randNum = Math.floor(Math.random() * 9);
+        const paragraph = gameSpots[randNum].querySelector('p');
+        gameLoopObj.checkDraw(gameBoard);
+    
+        if (paragraph.innerHTML !== '' && isBoardFull===false) {
+            this.addOEasy();
+        } else {
+            paragraph.innerHTML = "o";
         }
     }
+    }
+    
 
 
 
@@ -48,81 +58,128 @@ function GameLoop(bot,player){
     this.player=player;
 
 
+    this.checkWin = function(board) {
 
-    function checkWin(board) {
-        console.log("check winner called");
         const lines = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8],  // Rows
-            [0, 3, 6], [1, 4, 7], [2, 5, 8],  // Columns
-            [0, 4, 8], [2, 4, 6]              // Diagonals
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],  
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+            [0, 4, 8], [2, 4, 6]              
         ];
+
+        for (const line of lines) {
+            const [a, b, c] = line;
+
+            if (
+                board[a] &&
+                board[b] &&
+                board[c] &&
+                board[a].innerHTML &&
+                (board[a].innerHTML === board[b].innerHTML) &&
+                (board[a].innerHTML === board[c].innerHTML) &&
+                (board[a].innerHTML === 'x' || board[a].innerHTML === 'o')
+            ) {
+                winner = true;
+                winnerVal = board[a].innerHTML;
+                return;
+            }
+        }
+    }
     
-        let isBoardFull = true; // Initialize as true
+    function checkWin(board) {
+        const lines = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],  
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+            [0, 4, 8], [2, 4, 6]              
+        ];
     
         for (const line of lines) {
             const [a, b, c] = line;
+    
             if (
+                board[a] &&
+                board[b] &&
+                board[c] &&
                 board[a].innerHTML &&
-                board[a].innerHTML === board[b].innerHTML &&
-                board[a].innerHTML === board[c].innerHTML
+                (board[a].innerHTML === board[b].innerHTML) &&
+                (board[a].innerHTML === board[c].innerHTML) &&
+                (board[a].innerHTML === 'x' || board[a].innerHTML === 'o')
             ) {
-                console.log("winner");
-                winner=true;
-                winnerVal = board[a].innerHTML; // Update winner
-                return; // Exit the loop, we found a winner
+                winner = true;
+                winnerVal = board[a].innerHTML;
+                return;
             }
-        }
-    
-        for (const spot of board) {
-            if (!spot.innerHTML) {
-                isBoardFull = false; // If at least one spot is empty, the board is not full
-                break;
-            }
-        }
-    
-        if (isBoardFull) {
-            winner = "draw"; // If the board is full and there's no winner, it's a draw
         }
     }
-    
-    
-    
 
-    this.newGame = function() {
-
-        function gameLoop() {
-
-            if (winner === false) {
-               
-                gamePlayer.addX(() => {
-                    gameBot.addOEasy();
-                    checkWin(gameBoard);
-                    gameLoop(); // Continue the game loop
-                });
+            this.checkDraw = function(board) {
+                isBoardFull= true;
+                
+        
+                for (const spot of board) {
+                    if (!spot.innerHTML) {
+                        isBoardFull = false;
+                        console.log("DRAW2");
+                        break;
+                    }
+                }
+        
+                if (isBoardFull && !winner) {
+                    draw = true;
+                    console.log("DRAW");
+                }
             }
+        
+        
 
-            else{
-                restartGame();
-            }
+        this.newGame = function() {
+
+            function gameLoop() {
+                if (winner === false && draw === false) {
+                    gamePlayer.addX(() => {
+                        gameBot.addOEasy();
+                        gameLoopObj.checkDraw(gameBoard);
+                        checkWin(gameBoard);
+                        gameLoop();
+                    });
+                }
+                else{
+                    displayWinner();
+                    restartGame();
+                    gameLoop();
+                }
+                
+            
         }
-    
-        gameLoop(); // Start the game loop
+            
+            gameLoop();
 
-
-        function restartGame(){
-
-            console.log("restart");
-            gameBoard.forEach(function (element) {
-                if (element !== undefined) {
-                    element.innerHTML = "";
-                    console.log("restart called");
+            function displayWinner(){
+                console.log("sdkjgasldkjf");
+                const winMsg=document.getElementById("winMessage");
+                if(winner===true && winnerVal==='x'){
+                    winMsg.innerHTML="You won!";
                 }
 
-            });
+                else if(draw===true){
+                    winMsg.innerHTML="Draw";
+                }
+            }
+            function restartGame(){
 
-        }
+                gameBoard.forEach(function (element) {
+                    if (element !== undefined) {
+                        element.innerHTML = "";
+                    }
+                    console.log("draw " + draw);
+                    winner=false;
+                    draw=false;
+                    isBoardFull==false;
+
+                });
+
+            }
+        
     }
-    console.log("loop exited");
 }
 
 
