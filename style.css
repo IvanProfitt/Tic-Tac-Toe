@@ -1,3 +1,6 @@
+body{
+    background-color: #e7c8a0;
+}
 .gameCenter{
     display: flex;
     justify-content: center;
@@ -8,11 +11,17 @@
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap:0px;
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.75);
 }
 
 .spot{
+
     display:flex;
-    background-color:#D3d3d3;
+    align-items:flex-start;
+    justify-content: center;
+    background-color:#f4f4d5;
     height:150px;
     width:150px;
     transition: background-color 0.3s;
@@ -24,12 +33,18 @@
     justify-self: center;
     text-align: center;
     font-size: 200px;
+    padding-bottom:40px;
+    color: #d4a373;
 
  /* Remove default margin that might affect horizontal centering */
 }
 
-
-
 .spot:hover{
-    background-color: aqua;
+    background-color: #83b0e1;
+}
+
+.messageDiv{
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
