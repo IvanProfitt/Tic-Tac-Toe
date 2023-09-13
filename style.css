@@ -1,6 +1,18 @@
+@font-face {
+    font-family: "data";
+    src: url(font/data-latin.ttf);
+}
+
 body{
     background-color: #e7c8a0;
 }
+
+header{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .gameCenter{
     display: flex;
     justify-content: center;
@@ -8,6 +20,7 @@ body{
 }
 
 .gameBoard{
+    font-family: "data";
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap:0px;
@@ -25,6 +38,7 @@ body{
     height:150px;
     width:150px;
     transition: background-color 0.3s;
+    border:5px black solid;
 
 }
 
@@ -32,8 +46,8 @@ body{
     align-self: center;
     justify-self: center;
     text-align: center;
-    font-size: 200px;
-    padding-bottom:40px;
+    font-size: 180px;
+    padding-bottom:10px;
     color: #d4a373;
 
  /* Remove default margin that might affect horizontal centering */
@@ -48,3 +62,4 @@ body{
     align-items: center;
     justify-content: center;
 }
+
