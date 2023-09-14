@@ -22,7 +22,12 @@ function Player(){
                 if (paragraph.innerHTML === '') {
                     gameLoopObj.displayWinner();
                     paragraph.innerHTML = "x";
-                    gameBot.processMove();
+                    paragraph.classList.remove("empty");
+                    paragraph.classList.add("full");
+                    setTimeout(function() {
+                        gameBot.processMove();
+                      }, 500);
+
                 } else if (gameRestart === true) {
                 }
             }
@@ -75,6 +80,8 @@ function Bot(){
 
             } else {
                 paragraph.innerHTML = "o";
+                paragraph.classList.remove("empty");
+                paragraph.classList.add("full");
                 gameLoopObj.checkEnd();
                 if(end===true){
                     gameLoopObj.displayWinner();

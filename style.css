@@ -5,6 +5,7 @@
 
 body{
     background-color: #e7c8a0;
+    width: 100%;
 }
 
 header{
@@ -42,6 +43,17 @@ header{
 
 }
 
+.empty{
+    opacity:0;
+    transition:opacity 1s;
+}
+
+.full{
+    opacity: 1;
+    transition:opacity 1s;
+
+}
+
 .spot p {
     align-self: center;
     justify-self: center;
@@ -63,3 +75,28 @@ header{
     justify-content: center;
 }
 
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    width: 100%;
+    margin-left:10px;
+    background-color: #a0e2e7 ;
+    width:fit-content;
+    margin-left: calc(50% - 50vw);
+    width: 100vw;
+    -webkit-box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.75);
+box-shadow: 0px -5px 10px 0px rgba(0,0,0,0.75);
+}
+
+.gitHub{
+    height:50px;
+    width:50px;
+    border: none;
+    padding:10px;
+}
